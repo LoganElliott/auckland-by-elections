@@ -20,7 +20,7 @@ const GooglePlusIcon = generateShareIcon('google');
 const LinkedinIcon = generateShareIcon('linkedin');
 const PinterestIcon = generateShareIcon('pinterest');
 
-const shareUrl = 'http://aucklandelections.nz';
+const shareUrl = 'http://aucklandelections.co.nz';
 const title = 'Auckland Elections';
 
 export default class SocialMediaShareButtons extends React.Component {
@@ -72,7 +72,7 @@ export default class SocialMediaShareButtons extends React.Component {
         let pintereset =
             <PinterestShareButton
                 url={shareUrl}
-                media={'http://aucklandelections.nz/images/national-launch.png'}
+                media={'http://aucklandelections.co.nz/images/national-launch.png'}
                 className="Demo__some-network__share-button">
                 <PinterestIcon size={32} round />
             </PinterestShareButton>;

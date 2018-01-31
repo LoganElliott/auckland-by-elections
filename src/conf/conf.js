@@ -67,7 +67,7 @@ export const scoreBreakdowns = {
             },
             {
                 total: 8,
-                title: 'Unitary Plan Passing',
+                title: 'Kiwibuild, and Rural Urban Boundary',
                 image: housingImagePath + 'Unitary-Plan.png'
             },
             {

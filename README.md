@@ -4,7 +4,7 @@ Travis Build Status: ![Build Status](https://travis-ci.org/LoganElliott/auckland
 
 A website that pulls [Generation Zero](http://wwww.generationzero.org) Auckland Elections candidate score data and displays each candidate as a card
 
-See live site here http://loganelliott.space/aucklandelections/
+See live site here http://www.aucklandelections.co.nz
 
 ## Technologies
 
@@ -15,7 +15,7 @@ The transpiling & SCSS compiling is handled by [Webpack](https://webpack.github.
 
 ## Candidate Score Data
 
-It pulls the candidate data straight from a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1qK6ph0ZU1dGsTjkeIiPLjVRpyRQKo_ItDrnqMZmRjUU/edit#gid=2126234327) this allows live data updates by non-technical people 
+It pulls the candidate data straight from a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1y0lIXMnAd679FLEtsJEbUzT9DJnY7rLZBoUuk6UqO1s/edit#gid=0) this allows live data updates by non-technical people 
 
 ## Ward & Board Lookup
 
@@ -32,7 +32,7 @@ It is a desktop & mobile friendly website which will dynamically reconfigure whe
 ## Continuous Deployment & Hosting
 
 Deployment is handled by [Travis](http://www.travis-ci.org)
-This site is hosted on [Amazon S3](https://aws.amazon.com/s3/)
+This site is hosted on [Github Pages](https://pages.github.com/)
 
 #### Deployment process
 1. Push code to master branch

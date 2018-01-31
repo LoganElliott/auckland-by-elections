@@ -5,11 +5,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import {wardImagesPath, wards, localBoards} from '../../conf/conf';
-
-injectTapEventPlugin();
 
 require('./AddressSearcher.scss');
 

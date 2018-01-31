@@ -8,13 +8,9 @@ cache:
 script: 
   - npm run build
 deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_ID
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: "aucklandelections.nz"
-  skip_cleanup: true
-  region: ap-southeast-2
-  local-dir: dist
-  acl: public_read
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
   on:
     branch: master
