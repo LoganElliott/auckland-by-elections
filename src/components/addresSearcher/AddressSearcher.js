@@ -227,12 +227,6 @@ export default class AddressSearcher extends React.Component {
                     />
                 </div>
             </div>
-            <div className="down-down-selector">
-                <DropDownMenu value={this.state.ward || this.state.dropDownValue} onChange={this.onWardSelect} autoWidth={false} style={customWidth}>
-                    <MenuItem key={1} value={1} primaryText='Or Select a voting area' />
-                    {wardMenuItems}
-                </DropDownMenu>
-            </div>
         </div>;
 
         let loadingCircle = <div className="loading-bar">
