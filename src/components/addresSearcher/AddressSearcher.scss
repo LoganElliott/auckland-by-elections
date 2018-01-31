@@ -1,0 +1,51 @@
+@import '../../container/global';
+
+.local-board-input-and-button {
+  text-align: center;
+  color: snow;
+  padding: 0 40px 40px 40px;
+}
+
+.find-my-voting-area-button :first-child {
+    background-color: $button-colour;
+}
+
+.centre-textField {
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.loading-bar {
+  text-align: center;
+}
+
+.field-button-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.down-down-selector {
+  margin-bottom: 25px;
+}
+
+.voting-area {
+  &__ward {
+    font-size: 50px;
+    font-weight: 900;
+  }
+
+  &__local-board {
+    font-size: 25px;
+    font-weight: 500;
+    color: $dark-text;
+  }
+
+  &__preamble {
+    color: $dark-text;
+    font-size: 20px;
+  }
+}

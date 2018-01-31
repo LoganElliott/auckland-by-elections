@@ -1,0 +1,7 @@
+.header-buffer {
+  height: 120px;
+
+  @media screen and (max-width: 531px) {
+    height: 150px;
+  }
+}
