@@ -1,6 +1,0 @@
-.idea
-node_modules/
-dist/
-src/app-bundle.js
-npm-debug.log
-package-lock.json
