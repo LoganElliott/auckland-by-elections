@@ -41,7 +41,7 @@ export default class CandidateDetails extends Component {
                 <div>
                     {categories.map(category =>
                         <img key={candidate+category+'breakdown-images'} className='candidate-details__category'
-                             src={iconImagesPath + (candidate.standingForLocalBoard && category === 'competence' ? 'Cycling' : (category.charAt(0).toUpperCase() + category.slice(1))) + '-Icon.png'}
+                             src={iconImagesPath + ((category.charAt(0).toUpperCase() + category.slice(1))) + '-Icon.png'}
                         />
                     )}
                 </div>
@@ -50,7 +50,7 @@ export default class CandidateDetails extends Component {
                         <div key={candidate+category+'score'}
                              className={'candidate-details__scores-inner-score candidate-details__category candidate-details__category-' + category}>
                             <div className='candidate-details__scores-inner-score-value'>
-                                {candidate.standingForLocalBoard && category === 'competence' ? candidate['cycling'] : candidate[category]}
+                                {candidate[category]}
                             </div>
                         </div>)}
                 </div>
@@ -78,21 +78,16 @@ export default class CandidateDetails extends Component {
         </div>;
 
         let breakdownButton = (candidate) => <div className='candidate-details-breakdown-button'>
-            {!this.props.expandedIds.some((val) => val === candidate.key)
+            {
+                !this.props.expandedIds.some(val => val === candidate.key)
                 ?
-                candidate.standingForLocalBoard
-                    ?
-                    ''
-                    :
-                    <RaisedButton label='Show Score Breakdown'
-                              className={getCandidateBreakdownColourClass(candidate)}
-                            disabled={!candidate.consensus}
-                            onTouchTap={() => {this.props.handleShow(candidate.key);this.props.selectCategory(candidate.key, 'transport');}}
-                    />
+                <RaisedButton label='Show Score Breakdown'
+                        disabled={!candidate.consensus}
+                        onClick={() => {this.props.handleShow(candidate.key);this.props.selectCategory(candidate.key, 'transport');}}
+                />
                 :
                 <RaisedButton label='Hide Score Breakdown'
-                              className={getCandidateBreakdownColourClass(candidate)}
-                              onTouchTap={() => this.props.handleHide(candidate.key)}
+                              onClick={() => this.props.handleHide(candidate.key)}
                 />
             }
         </div>;
