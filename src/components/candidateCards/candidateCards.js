@@ -12,17 +12,11 @@ require('./candidateCards.scss');
 const googleSpreadSheetUrl = 'https://spreadsheets.google.com/a/google.com/tq?key=';
 const commaSpace = '%2C%20';
 
-const mayorAndCouncillorsColumns = ['B','D','F','H','J','L','N','P','R','T','V','X','Z', 'AB','AD','AF','AG','AI','AN','AO','AP','AQ','AR','AS','AT','AU'];
-const mayorAndCouncillorsGoogleSpreadSheetKey = '1qK6ph0ZU1dGsTjkeIiPLjVRpyRQKo_ItDrnqMZmRjUU';
-const mayorAndCouncillorsQuery = mayorAndCouncillorsColumns.slice(1).reduce( (pre, cur) => pre + commaSpace + cur,'SELECT%20B');
-const mayorAndCouncillorsJsonpCallback = 'getMayorAndCouncillors';
-const mayorAndCouncillorsDataUrl = googleSpreadSheetUrl + mayorAndCouncillorsGoogleSpreadSheetKey + '&tq=' + mayorAndCouncillorsQuery + '&tqx=responseHandler:' + mayorAndCouncillorsJsonpCallback;
-
-const localBoardsColumns = ['B','C','D','E','R','S','T','U','V','W','X'];
-const localBoardsGoogleSpreadSheetKey = '1u51qnVBZtF_NdCdcsFHO-i5rbpu54NagFU6TgMpmg4c';
-const localBoardsQuery = localBoardsColumns.slice(1).reduce( (pre, cur) => pre + commaSpace + cur,'SELECT%20B');
-const localBoardsJsonpCallback = 'getLocalBoards';
-const localBoardsDataUrl = googleSpreadSheetUrl + localBoardsGoogleSpreadSheetKey + '&tq=' + localBoardsQuery + '&tqx=responseHandler:' + localBoardsJsonpCallback;
+const wardAndLocalBoardColumns = ['B', 'C', 'E', 'G', 'I', 'K', 'M', 'O', 'Q', 'S', 'U', 'W', 'Y', 'AA', 'AC', 'AE', 'AG', 'AH', 'AI', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV'];
+const wardAndLocalBoardGoogleSpreadSheetKey = '1y0lIXMnAd679FLEtsJEbUzT9DJnY7rLZBoUuk6UqO1s';
+const wardAndLocalBoardQuery = wardAndLocalBoardColumns.slice(1).reduce( (pre, cur) => pre + commaSpace + cur,'SELECT%20B');
+const wardAndLocalBoardsJsonpCallback = 'getWardsAndLocalBoards';
+const wardAndLocalBoardsDataUrl = googleSpreadSheetUrl + wardAndLocalBoardGoogleSpreadSheetKey + '&tq=' + wardAndLocalBoardQuery + '&tqx=responseHandler:' + wardAndLocalBoardsJsonpCallback;
 
 export default class card extends React.Component {
     constructor(props, context) {
@@ -38,13 +32,10 @@ export default class card extends React.Component {
     }
 
     getCandidates(){
-        let mayorAndCouncillorCandidates = this.getCandidatesOfType(mayorAndCouncillorsDataUrl,mayorAndCouncillorsJsonpCallback, true);
-        let localBoardCandidates = this.getCandidatesOfType(localBoardsDataUrl,localBoardsJsonpCallback, false);
-        Promise.all([mayorAndCouncillorCandidates,localBoardCandidates])
-            .then(values => {
-                let combinedCandidates = values[0].concat(values[1]);
-
-                let sortedCandidates = this.sortCandidates(combinedCandidates);
+        let candidates = this.getCandidatesOfType(wardAndLocalBoardsDataUrl,wardAndLocalBoardsJsonpCallback);
+        candidates
+            .then(value => {
+                let sortedCandidates = this.sortCandidates(value);
                 this.setState({candidates: sortedCandidates});
             })
             .catch(err => console.debug(err));
@@ -60,29 +51,23 @@ export default class card extends React.Component {
         })
     };
 
-    getCandidatesOfType(dataUrl, callback, isMayorOrCouncillor) {
+    getCandidatesOfType(dataUrl, callback) {
         return new Promise((resolve, reject) => {
             jsonp(dataUrl, {"name": callback}, (err, data) => {
-                this.jsonpCallback(err, data, isMayorOrCouncillor)
+                this.jsonpCallback(err, data)
                     .then(value => resolve(value))
                     .catch(err => reject(err));
             });
         });
     }
 
-    jsonpCallback(err,data, isMayorOrCouncillor) {
+    jsonpCallback(err,data) {
         return new Promise((resolve, reject) => {
             if(!err){
                 let rows = data.table.rows;
                 let newCandidates = [];
                 map(rows, (row) => {
-                    let candidate;
-                    if(isMayorOrCouncillor){
-                        candidate = this.createMayorOrCouncillorCandidate(row);
-                    } else {
-                        candidate = this.createLocalBoardCandidate(row);
-                    }
-
+                    let candidate = this.createCandidate(row);
                     newCandidates.push(candidate);
                 });
                 resolve(newCandidates)
@@ -92,75 +77,54 @@ export default class card extends React.Component {
         })
     }
 
-    createMayorOrCouncillorCandidate(val){
-        let scores = [];
-        let transport = [];
-        let housing = [];
-        let environment = [];
+    createCandidate(val) {
+      let scores = [];
+      let transport = [];
+      let housing = [];
+      let environment = [];
 
-        map(val.c.slice(1,9), (a) => {
-            if(a){
-                transport.push(a.v)
-            }
-        });
-        map(val.c.slice(9,12), (a) => {
-            if(a) {
-                housing.push(a.v);
-            }
-        });
-        map(val.c.slice(12,15), (a) => {
-            if(a) {
-                environment.push(a.v);
-            }
-        });
-        scores.transport = transport;
-        scores.housing = housing;
-        scores.environment = environment;
-        scores.competence = val.c[15] ? [val.c[15].v] :[];
+      map(val.c.slice(2,10), (a) => {
+        if(a){
+          transport.push(a.v)
+        }
+      });
+      map(val.c.slice(10,13), (a) => {
+        if(a) {
+          housing.push(a.v);
+        }
+      });
+      map(val.c.slice(13,16), (a) => {
+        if(a) {
+          environment.push(a.v);
+        }
+      });
+      scores.transport = transport;
+      scores.housing = housing;
+      scores.environment = environment;
+      scores.competence = val.c[16] ? [val.c[16].v] :[];
 
-        let name = val.c[0].v.trim();
-        let nameSplit = name.split(' ');
-        let image = candidateImagesPath + name.replace(/\s/g,'-') + '.png';
+      let firstName = val.c[0].v.trim();
+      let lastName = val.c[1].v.trim();
+      let image = candidateImagesPath + firstName + '-' +lastName + '.png';
 
-        return {
-            'key': nameSplit[0]+nameSplit[1],
-            'firstName' : nameSplit[0],
-            'lastName' : nameSplit[1],
-            'image': image,
-            'scores': scores,
-            'consensus': val.c[16] ? val.c[16].v: '',
-            'overallValue': val.c[17] ? val.c[17].v : '?',
-            'overall': val.c[18]  ? val.c[18].v : 0,
-            'transport': val.c[19]  ? val.c[19].v : '?',
-            'housing': val.c[20]  ? val.c[20].v : '?',
-            'environment': val.c[21]  ? val.c[21].v : '?',
-            'competence': val.c[22]  ? val.c[22].v.trim() : '?',
-            'ticket': val.c[23] ? val.c[23].v.trim() : '',
-            'standingForMayor': val.c[24] ? val.c[24].v : '',
-            'standingForCouncillor': val.c[25] ? val.c[25].v : '',
-        };
-    }
-
-    createLocalBoardCandidate(val){
-        let firstName = val.c[0].v.trim();
-        let lastName = val.c[1].v.trim();
-        let image = candidateImagesPath + firstName + '-' +lastName + '.png';
-
-        return {
-            'key': firstName+lastName,
-            'firstName' : firstName,
-            'lastName' : lastName,
-            'image': image,
-            'standingForLocalBoard': val.c[2] ? val.c[2].v : '',
-            'subdivision': val.c[3] ? val.c[3].v : '',
-            'overallValue': val.c[4] ? val.c[4].v : 0,
-            'transport': val.c[5] ? val.c[5].v : '?',
-            'housing': val.c[6] ? val.c[6].v : '?',
-            'cycling': val.c[7]? val.c[7].v : '?',
-            'environment': val.c[8] ? val.c[8].v : '?',
-            'overall': val.c[9] && val.c[9].v ? val.c[9].v : '?',
-            'ticket': val.c[10] ? val.c[10].v : '?',
-        };
+      return {
+        'key': firstName+lastName,
+        'firstName' : firstName,
+        'lastName' : lastName,
+        'image': image,
+        'scores': scores,
+        'consensus': val.c[17] ? val.c[17].v: '',
+        'overallValue': val.c[18] ? val.c[18].v : '?',
+        'overall': val.c[19]  ? val.c[19].v : 0,
+        'transport': val.c[20]  ? val.c[20].v : '?',
+        'housing': val.c[21]  ? val.c[21].v : '?',
+        'environment': val.c[22]  ? val.c[22].v : '?',
+        'competence': val.c[23]  ? val.c[23].v.trim() : '?',
+        'ticket': val.c[24] ? val.c[24].v.trim() : '',
+        'standingForMayor': val.c[25] ? val.c[25].v : '',
+        'standingForCouncillor': val.c[26] ? val.c[26].v : '',
+        'standingForLocalBoard': val.c[27] ? val.c[27].v : '',
+      };
     }
 
     render() {
@@ -211,8 +175,8 @@ export default class card extends React.Component {
         </div>;
 
         return <div className='candidates'>
-            {this.props.ward ? councillors : ''}
-            {this.state.candidates.length > 0 ? mayor : ''}
+            {this.props.ward && councillorCandidates.length > 0 ? councillors : ''}
+            {mayorCandidates.length > 0 ? mayor : ''}
             {this.props.localBoard && localBoardCandidates.length > 0 ? localBoard: ''}
             {this.state.candidates.length === 0 ? <CircularProgress mode="indeterminate"/> : '' }
             </div>
