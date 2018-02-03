@@ -115,7 +115,7 @@ export default class card extends React.Component {
         'scores': scores,
         'consensus': val.c[17] ? val.c[17].v: '',
         'overallValue': val.c[18] ? val.c[18].v : '?',
-        'overall': val.c[19]  ? val.c[19].v : 0,
+        'overall': val.c[19]  ? val.c[19].v : '?',
         'transport': val.c[20]  ? val.c[20].v : '?',
         'housing': val.c[21]  ? val.c[21].v : '?',
         'environment': val.c[22]  ? val.c[22].v : '?',
