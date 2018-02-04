@@ -222,8 +222,7 @@ export default class AddressSearcher extends React.Component {
                 <div>
                     <RaisedButton label="FIND MY VOTING AREA"
                                   onClick={this.handleClick}
-                                  style={buttonStyle}
-                                  className='find-my-voting-area-button'
+                                  backgroundColor={'rgb(103,189,176)'}
                     />
                 </div>
             </div>
