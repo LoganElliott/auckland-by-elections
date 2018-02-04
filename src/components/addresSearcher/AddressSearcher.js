@@ -185,7 +185,7 @@ export default class AddressSearcher extends React.Component {
                     Auckland Election Scorecards
                 </div>
                 <div style={aboutText}>
-                    We sat down and grilled each Auckland Council candidate one by one.
+                    We sat down and grilled Auckland By-election candidates.
                     <br/>
                     Here are their results.
                 </div>
