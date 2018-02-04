@@ -2,7 +2,7 @@ import React from 'react'
 
 require('./whatWeAsked.scss');
 
-const whatWeAskedText = 'We asked every council candidate the same 14 questions on Transport, Housing and the Environment. We gave them points based on how well they answered and how well they matched Generation Zero\'s vision for a liveable low-carbon Auckland.';
+const whatWeAskedText = 'We asked candidates for council the same 14 questions on Transport, Housing and the Environment. We gave them points based on how well they answered and how well they matched Generation Zero\'s vision for a liveable low-carbon Auckland.';
 
 export default class header extends React.Component {
     constructor(context) {
