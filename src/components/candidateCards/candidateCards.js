@@ -13,7 +13,7 @@ const googleSpreadSheetUrl = 'https://spreadsheets.google.com/a/google.com/tq?ke
 const commaSpace = '%2C%20';
 
 const wardAndLocalBoardColumns = ['B', 'C', 'E', 'G', 'I', 'K', 'M', 'O', 'Q', 'S', 'U', 'W', 'Y', 'AA', 'AC', 'AE', 'AG', 'AH', 'AI', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV'];
-const wardAndLocalBoardGoogleSpreadSheetKey = '1y0lIXMnAd679FLEtsJEbUzT9DJnY7rLZBoUuk6UqO1s';
+const wardAndLocalBoardGoogleSpreadSheetKey = '1te3103iZKI9E9e02lxFUd6_BKYHVTeDwfiCEzkbBgEc';
 const wardAndLocalBoardQuery = wardAndLocalBoardColumns.slice(1).reduce( (pre, cur) => pre + commaSpace + cur,'SELECT%20B');
 const wardAndLocalBoardsJsonpCallback = 'getWardsAndLocalBoards';
 const wardAndLocalBoardsDataUrl = googleSpreadSheetUrl + wardAndLocalBoardGoogleSpreadSheetKey + '&tq=' + wardAndLocalBoardQuery + '&tqx=responseHandler:' + wardAndLocalBoardsJsonpCallback;
@@ -35,6 +35,7 @@ export default class card extends React.Component {
         let candidates = this.getCandidatesOfType(wardAndLocalBoardsDataUrl,wardAndLocalBoardsJsonpCallback);
         candidates
             .then(value => {
+                value.shift();
                 let sortedCandidates = this.sortCandidates(value);
                 this.setState({candidates: sortedCandidates});
             })
