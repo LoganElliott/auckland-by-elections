@@ -35,7 +35,6 @@ export default class card extends React.Component {
         let candidates = this.getCandidatesOfType(wardAndLocalBoardsDataUrl,wardAndLocalBoardsJsonpCallback);
         candidates
             .then(value => {
-                value.shift();
                 let sortedCandidates = this.sortCandidates(value);
                 this.setState({candidates: sortedCandidates});
             })
