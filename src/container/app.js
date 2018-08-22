@@ -18,7 +18,7 @@ export default class App extends Component {
     constructor(props, context){
         super(props, context);
         this.state = {
-            ward: '',
+            ward: 'Howick',
             localBoard: ''
         };
         this.setWardAndLocalBoard = this.setWardAndLocalBoard.bind(this);
